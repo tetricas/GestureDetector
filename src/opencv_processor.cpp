@@ -34,7 +34,6 @@ COpenCVProcessor::COpenCVProcessor(QObject *parent) :
     connect(m_gestureTimer, &QTimer::timeout, this, &COpenCVProcessor::catchNewGesture);
 }
 
-
 void COpenCVProcessor::run()
 {
     VideoCapture camera(0);
@@ -189,7 +188,7 @@ bool COpenCVProcessor::markHandCenter(cv::Mat& frame, const cv::Mat& contour, cv
                 }
         }
     }
-    float radius_thresh = 0.04;
+    double radius_thresh = 0.04;
     if(maxDist > radius_thresh * frame.size().width)
     {
         circle(frame, center, maxDist, {255,0,0},2);

@@ -14,7 +14,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
     void start();
@@ -29,8 +29,8 @@ private slots:
     void stopClicked();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow* m_ui;
 
-    QThread* thread;
+    QThread* m_thread;
     bool m_isFirstClick;
 };
