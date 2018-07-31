@@ -45,18 +45,18 @@ FORMS += \
 OTHER_FILES += \
     ../xml/gestures.xml
 
-INCLUDEPATH += C:\opencv\build\install/include \
+INCLUDEPATH += $$(OPENCV_SDK_DIR)/include/ \
             ../include/ \
-            ../thirdparty/rapidxml-1.13
+            ../thirdparty/rapidxml/
 
-LIBS += C:\opencv\build\install/x86/mingw/bin\libopencv_core340.dll
-LIBS += C:\opencv\build\install/x86/mingw/bin\libopencv_highgui340.dll
-LIBS += C:\opencv\build\install/x86/mingw/bin\libopencv_imgcodecs340.dll
-LIBS += C:\opencv\build\install/x86/mingw/bin\libopencv_imgproc340.dll
-LIBS += C:\opencv\build\install/x86/mingw/bin\libopencv_features2d340.dll
-LIBS += C:\opencv\build\install/x86/mingw/bin\libopencv_calib3d340.dll
-LIBS += C:\opencv\build\install/x86/mingw/bin\libopencv_videoio340.dll
-LIBS += C:\opencv\build\install/x86/mingw/bin\libopencv_video340.dll
+LIBS += $$(OPENCV_SDK_DIR)/x86/mingw/bin/libopencv_core340.dll \
+ $$(OPENCV_SDK_DIR)/x86/mingw/bin/libopencv_highgui340.dll \
+ $$(OPENCV_SDK_DIR)/x86/mingw/bin/libopencv_imgcodecs340.dll \
+ $$(OPENCV_SDK_DIR)/x86/mingw/bin/libopencv_imgproc340.dll \
+ $$(OPENCV_SDK_DIR)/x86/mingw/bin/libopencv_features2d340.dll \
+ $$(OPENCV_SDK_DIR)/x86/mingw/bin/libopencv_calib3d340.dll \
+ $$(OPENCV_SDK_DIR)/x86/mingw/bin/libopencv_videoio340.dll \
+ $$(OPENCV_SDK_DIR)/x86/mingw/bin/libopencv_video340.dll
 
 win32 {
     PWD_WIN = $${PWD}

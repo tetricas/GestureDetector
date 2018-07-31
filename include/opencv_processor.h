@@ -4,7 +4,7 @@
 #include <QTimer>
 
 #include <opencv2/core/core.hpp>
-#include "opencv2/video/background_segm.hpp"
+#include <opencv2/video/background_segm.hpp>
 
 class COpenCVProcessor : public QObject
 {
