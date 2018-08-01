@@ -1,9 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <vector>
-#include <array>
-
 #include <QThread>
 #include <QtDebug>
 

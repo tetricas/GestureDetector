@@ -1,12 +1,5 @@
 #include "opencv_processor.h"
 
-#include <cmath>
-#include <algorithm>
-#include <sstream>
-#include <iterator>
-#include <iostream>
-#include <string>
-
 #include <QtDebug>
 
 #include <opencv2/core/utility.hpp>
