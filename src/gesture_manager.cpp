@@ -49,28 +49,35 @@ std::string CGestureManager::findGesture(const std::vector<cv::Point> &points, c
         return "";
     }
 
-    xml_node<>* node = gesturesRoot->first_node();
-    std::string gesture = node->name();
-    bool isGesture = true;
-    for (xml_node<>* child = node->first_node(); child; child = child->next_sibling())
+    std::string gesture = "";
+    for (xml_node<>* node = gesturesRoot->first_node(); node; node = node->next_sibling())
     {
-        std::vector<int> bounds;
-        std::istringstream stream(child->value());
-        std::string part;
-        while (getline(stream, part, ';'))
-            bounds.push_back(std::stoi(part));
+        bool isGesture = true;
+        size_t pos = 0;
+        for (xml_node<>* child = node->first_node(); child; child = child->next_sibling())
+        {
+            std::vector<int> bounds;
+            std::istringstream stream(child->value());
+            std::string part;
+            while (getline(stream, part, ';'))
+                bounds.push_back(std::stoi(part));
 
-        size_t pos = 5;
-        std::string name = child->name();
-        if(name.compare("base"))
-            pos = std::stoi(child->first_attribute()->value()) - 1;
+            std::string name = child->name();
+            if(name.compare("base"))
+                pos = std::stoul(child->first_attribute()->value()) - 1;
+            else
+                ++pos;
 
-        if(angles.size() > pos)
-            if(angles[pos] < bounds[0] || angles[pos] > bounds[1])
-                isGesture = false;
+            if(angles.size() > pos)
+                if(angles[pos] < bounds[0] || angles[pos] > bounds[1])
+                    isGesture = false;
+        }
+        if(isGesture)
+        {
+            gesture = node->name();
+            break;
+        }
     }
-    if(!isGesture)
-        return "";
 
     return gesture;
 }

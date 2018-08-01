@@ -8,4 +8,11 @@
         <finger type ="5">30;90</finger>
         <base>90;180</base>
     </Palm>
+    <Peace>
+        <finger type ="1">40;90</finger>
+        <finger type ="2">0;10</finger>
+        <finger type ="3">10;20</finger>
+        <finger type ="4">20;90</finger>
+        <base>90;180</base>
+    </Peace>
 </gestures>

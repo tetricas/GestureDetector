@@ -205,7 +205,7 @@ void COpenCVProcessor::markFingers(cv::Mat& frame, const std::vector<cv::Point>&
     {
         double dist = sqrt(pow(hull[size - i].x - hull[size - i - 1].x, 2) +
                            pow(hull[size - i].y - hull[size - i - 1].y, 2));
-        if (dist > fingerRadius * 1.5)
+        if (dist > fingerRadius * 2)
         {
             fingers.push_back(Point(hull[size - i].x, hull[size - i].y));
             if(hull[size - i].y == hull[size - i - 1].y && maxHeight < hull[size - i].y)
