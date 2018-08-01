@@ -23,20 +23,21 @@ COpenCVProcessor::COpenCVProcessor(QObject *parent) :
 {
     namedWindow("frame",1);
     CGestureManager::Instance().initGestures();
-    m_gestureTimer = new QTimer(this);
-    connect(m_gestureTimer, &QTimer::timeout, this, &COpenCVProcessor::catchNewGesture);
+
+    m_gestureTimer = new QTimer();
+    connect(m_gestureTimer, &QTimer::timeout, this, &COpenCVProcessor::catchNewGesture, Qt::DirectConnection);
+    connect(this, &COpenCVProcessor::finished, m_gestureTimer, &QTimer::stop);
+    connect(this, &COpenCVProcessor::finished, m_gestureTimer, &QTimer::deleteLater);
 }
 
 void COpenCVProcessor::run()
 {
     VideoCapture camera(0);
-    if(!camera.isOpened())  // check if we succeeded
+    if(!camera.isOpened())
         return;
 
-    m_gestureTimer->start(3000);
     while(m_isWorking)
     {
-        //Capture frame from camera
         Mat frame;
         camera >> frame;
         if(frame.data == nullptr)
@@ -94,6 +95,7 @@ void COpenCVProcessor::run()
 void COpenCVProcessor::captureBackground()
 {
     m_backgroundCaptured = true;
+    m_gestureTimer->start(3000);
 }
 
 void COpenCVProcessor::stop()
