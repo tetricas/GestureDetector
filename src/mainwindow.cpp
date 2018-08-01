@@ -27,16 +27,16 @@ MainWindow::~MainWindow()
 void MainWindow::start()
 {
     m_thread = new QThread(this);
-    COpenCVProcessor* m_processor = new COpenCVProcessor(m_thread);
+    COpenCVProcessor* m_processor = new COpenCVProcessor();
 
     connect(m_thread, &QThread::started, m_processor, &COpenCVProcessor::run);
-    connect(this, &MainWindow::canCaptureBack, m_processor, &COpenCVProcessor::captureBackground);
-    connect(this, &MainWindow::stop, m_processor, &COpenCVProcessor::stop);
+    connect(this, &MainWindow::canCaptureBack, m_processor, &COpenCVProcessor::captureBackground, Qt::DirectConnection);
+    connect(this, &MainWindow::stop, m_processor, &COpenCVProcessor::stop, Qt::DirectConnection);
 
     connect(m_processor, &COpenCVProcessor::finished, m_thread, &QThread::terminate);
     connect(m_processor, &COpenCVProcessor::finished, m_processor, &COpenCVProcessor::deleteLater);
 
-    //m_processor->moveToThread(m_thread);
+    m_processor->moveToThread(m_thread);
     m_thread->start();
 }
 
