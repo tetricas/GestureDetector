@@ -1,6 +1,6 @@
 #include "opencv_processor.h"
 
-#include <QtDebug>
+#include <QThread>
 
 #include <opencv2/core/utility.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -21,7 +21,6 @@ COpenCVProcessor::COpenCVProcessor(QObject *parent) :
     m_isWorking(true),
     m_isCanCatchGesture(false)
 {
-    namedWindow("frame",1);
     CGestureManager::Instance().initGestures();
 
     m_gestureTimer = new QTimer();
@@ -36,6 +35,7 @@ void COpenCVProcessor::run()
     if(!camera.isOpened())
         return;
 
+    Mat frameOut;
     while(m_isWorking)
     {
         Mat frame;
@@ -86,8 +86,10 @@ void COpenCVProcessor::run()
             }
         }
 
-        imshow("frame", frame);
-        waitKey(10);
+        cv::cvtColor(frame, frameOut, CV_RGB2BGR);
+        processedImage(QImage(frameOut.data, frameOut.cols, frameOut.rows,
+                              static_cast<int>(frameOut.step), QImage::Format_RGB888));
+        QThread::msleep(10);
     }
     emit finished();
 }

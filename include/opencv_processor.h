@@ -2,6 +2,7 @@
 
 #include <QObject>
 #include <QTimer>
+#include <QImage>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/video/background_segm.hpp>
@@ -14,6 +15,7 @@ public:
 
 signals:
     void finished();
+    void processedImage(QImage image);
 
 public slots:
 

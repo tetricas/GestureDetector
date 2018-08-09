@@ -27,6 +27,7 @@ signals:
 private slots:
     void captureClicked();
     void stopClicked();
+    void getProcessedImage(QImage image);
 
 private:
     Ui::MainWindow* m_ui;

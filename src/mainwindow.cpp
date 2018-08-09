@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QThread>
-#include <QtDebug>
+#include <QPixmap>
 
 #include "opencv_processor.h"
 
@@ -21,6 +21,12 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     emit stop();
+    m_thread->quit();
+    if(!m_thread->wait(10))
+    {
+        m_thread->terminate();
+        m_thread->wait();
+    }
     delete m_ui;
 }
 
@@ -32,8 +38,9 @@ void MainWindow::start()
     connect(m_thread, &QThread::started, m_processor, &COpenCVProcessor::run);
     connect(this, &MainWindow::canCaptureBack, m_processor, &COpenCVProcessor::captureBackground, Qt::DirectConnection);
     connect(this, &MainWindow::stop, m_processor, &COpenCVProcessor::stop, Qt::DirectConnection);
+    connect(m_processor, &COpenCVProcessor::processedImage, this, &MainWindow::getProcessedImage);
 
-    connect(m_processor, &COpenCVProcessor::finished, m_thread, &QThread::terminate);
+    connect(m_processor, &COpenCVProcessor::finished, m_thread, &QThread::quit);
     connect(m_processor, &COpenCVProcessor::finished, m_processor, &COpenCVProcessor::deleteLater);
 
     m_processor->moveToThread(m_thread);
@@ -49,4 +56,9 @@ void MainWindow::captureClicked()
 void MainWindow::stopClicked()
 {
     emit stop();
+}
+
+void MainWindow::getProcessedImage(QImage image)
+{
+    m_ui->imageLabel->setPixmap(QPixmap::fromImage(image));
 }
